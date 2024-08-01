@@ -24,7 +24,7 @@ def fetch_notion_tasks(notion_token, database_id):
 
     if response.status_code == 200:
         data = response.json()
-        print("Data retrieved from Notion:", data)
+        
         return data['results']
     else:
         print(f"Failed to fetch tasks: {response.status_code}, {response.text}")

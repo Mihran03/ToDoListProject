@@ -1,63 +1,53 @@
 // src/components/TodoList.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Box, Input, Button, List, ListItem, Checkbox, IconButton } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
+import React, { useEffect } from 'react';
+import { Table, Thead, Tbody, Tr, Th, Td, Box, Text } from '@chakra-ui/react';
+import { useTasks } from './TaskContext.js';
+
+// Define colors for different statuses
+const statusColors = {
+  'Not Started': '#FF6384',
+  'In Progress': '#36A2EB',
+  'Completed': '#4BC0C0'
+};
 
 const TodoList = () => {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const { tasks, setTasks } = useTasks();
 
   useEffect(() => {
-    // Fetch tasks from the server
-    axios.get('/api/tasks')
-      .then(response => setTasks(response.data))
+    fetch('http://localhost:8000/api/todo/')
+      .then(response => response.json())
+      .then(data => setTasks(data.tasks))
       .catch(error => console.error('Error fetching tasks:', error));
-  }, []);
-
-  const addTask = () => {
-    if (newTask.trim() === '') return;
-
-    axios.post('/api/tasks', { title: newTask })
-      .then(response => {
-        setTasks([...tasks, response.data]);
-        setNewTask('');
-      })
-      .catch(error => console.error('Error adding task:', error));
-  };
-
-  const deleteTask = (id) => {
-    axios.delete(`/api/tasks/${id}`)
-      .then(() => {
-        setTasks(tasks.filter(task => task.id !== id));
-      })
-      .catch(error => console.error('Error deleting task:', error));
-  };
+  }, [setTasks]);
 
   return (
-    <Box>
-      <Input
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        placeholder="New task"
-        mb={2}
-      />
-      <Button onClick={addTask}>Add Task</Button>
-      <List spacing={3} mt={4}>
-        {tasks.map(task => (
-          <ListItem key={task.id} display="flex" alignItems="center">
-            <Checkbox mr={2} />
-            {task.title}
-            <IconButton
-              aria-label="Delete task"
-              icon={<DeleteIcon />}
-              size="sm"
-              onClick={() => deleteTask(task.id)}
-              ml="auto"
-            />
-          </ListItem>
-        ))}
-      </List>
+    <Box p={5} shadow="md" borderWidth="1px">
+      <Text fontSize="2xl">To-Do List</Text>
+      <Table>
+        <Thead>
+          <Tr>
+            <Th>Title</Th>
+            <Th>Status</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {tasks.map(task => (
+            <Tr key={task.id}>
+              <Td>{task.properties.Title.title[0].plain_text}</Td>
+              <Td>
+                <Box
+                  display="inline-block"
+                  width="12px"
+                  height="12px"
+                  borderRadius="50%"
+                  bg={statusColors[task.properties['Status'].select.name] || 'gray.300'}
+                />
+                <Text ml={2} display="inline">{task.properties['Status'].select.name}</Text>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     </Box>
   );
 };

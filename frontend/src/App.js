@@ -2,13 +2,16 @@ import React from 'react';
 import './App.css';
 import logo from './logo.svg';
 import TodoList from './TodoList.js';  // Import TodoList component
-
+import Dashboard from './Dashboard.js';
 
 function App() {
   return (
     <div className="App">
-      
-      <TodoList />  // Include TodoList component in your App
+
+    <Dashboard />
+      {/*
+      <TodoList />
+        */}
     </div>
   );
 }
