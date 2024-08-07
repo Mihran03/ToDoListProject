@@ -5,5 +5,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/todo/', include('ToDoList.urls')),  # Includes the URLs from ToDoList correctly
+    path('api/todo/', include('ToDoList.urls')), 
+    path('api/calendar_info/', include('calendar_info.urls')), # Includes the URLs from ToDoList correctly
 ]

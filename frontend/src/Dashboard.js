@@ -9,7 +9,7 @@ import Weather from './Weather';
 import StatusChart from './StatusChart';
 import Calendar from './Calendar';
 import {SimpleGrid, GridItem } from '@chakra-ui/react';
-
+import CalendarInfo from './CalendarInfo';
 // Motion.div components for animating
 const MotionBox = motion(Box);
 
@@ -43,7 +43,9 @@ const Dashboard = () => {
   <GridItem colSpan={2} rowSpan={4} borderRadius="md" borderWidth="1px" boxShadow="md" overflow="hidden">
   <Calendar />
 </GridItem>
-  <GridItem rowSpan={3} bg='purple' />
+  <GridItem rowSpan={3}  borderRadius="md" borderWidth="1px" boxShadow="md" overflow="hidden">
+    <CalendarInfo/>
+  </GridItem>
 </Grid>
     
   );

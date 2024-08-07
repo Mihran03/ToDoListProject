@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'ToDoList',
     'weather',
+    'calendar_info'
 ]
 
 MIDDLEWARE = [
