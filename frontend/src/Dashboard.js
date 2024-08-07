@@ -8,6 +8,7 @@ import DateTime from './DateTime';
 import Weather from './Weather';
 import StatusChart from './StatusChart';
 import Calendar from './Calendar';
+import {SimpleGrid, GridItem } from '@chakra-ui/react';
 
 // Motion.div components for animating
 const MotionBox = motion(Box);
@@ -19,55 +20,32 @@ const Dashboard = () => {
 
 
   return (
-    <Grid templateColumns="repeat(4, 1fr)" templateRows='repeat(2, 1fr)' gap={6} p={6}>
-      <MotionBox
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <DateTime />
-      </MotionBox>
-      <MotionBox
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        <Weather />
-      </MotionBox>
-      <MotionBox
-        gridRow={{span: 2}}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <ToDoList />
-      </MotionBox>
-      <MotionBox
-        gridRow={{span: 2}}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <StatusChart />
-      </MotionBox>
-      <MotionBox
-        
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-      >
-        <Calendar />
-      </MotionBox>
-      <Box  textAlign="center">
-        <IconButton
-          icon={<RepeatIcon />}
-          onClick={handleReload}
-          aria-label="Reload"
-          colorScheme="teal"
-          size="lg"
-        />
-      </Box>
-    </Grid>
+    <Grid
+  h='900px'
+  templateRows='repeat(4, 1fr)'
+  templateColumns='repeat(4, 1fr)'
+  gap={4}
+  padding={10}
+>
+  <GridItem rowSpan={1} colSpan={1} shadow="md" borderWidth="1px"> 
+  <DateTime />
+  </GridItem>
+  <GridItem colSpan={1} rowSpan={1}  shadow="md" borderWidth="1px" >
+  <Weather />
+    </GridItem>
+    <GridItem colSpan={1} rowSpan={2} shadow="md" borderWidth="1px" overflow="hidden">
+  <StatusChart />
+</GridItem>
+
+  <GridItem colSpan={1} rowSpan={5} shadow="md" borderWidth="1px" overflow="hidden">
+  <ToDoList />
+</GridItem>
+  <GridItem colSpan={2} rowSpan={4} borderRadius="md" borderWidth="1px" boxShadow="md" overflow="hidden">
+  <Calendar />
+</GridItem>
+  <GridItem rowSpan={3} bg='purple' />
+</Grid>
+    
   );
 };
 

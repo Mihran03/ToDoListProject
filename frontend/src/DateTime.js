@@ -14,7 +14,7 @@ const DateTime = () => {
   }, []);
 
   return (
-    <Box p={5} shadow="md" borderWidth="1px">
+    <Box p={5} >
       <Text fontSize="2xl">{dateTime.toLocaleDateString()}</Text>
       <Text fontSize="xl">{dateTime.toLocaleTimeString()}</Text>
     </Box>

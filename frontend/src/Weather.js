@@ -11,7 +11,7 @@ const Weather = () => {
   };
 
   return (
-    <Box p={5} shadow="md" borderWidth="1px">
+    <Box p={5} >
       <Text fontSize="2xl">{weatherData.name}</Text>
       <Flex align="center" mt={2}>
         <Icon as={MdWbSunny} boxSize={8} />

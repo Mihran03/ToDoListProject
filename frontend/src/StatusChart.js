@@ -1,4 +1,3 @@
-// src/components/StatusChart.js
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
@@ -11,25 +10,19 @@ const StatusChart = () => {
   const { tasks } = useTasks();
 
   if (!tasks || tasks.length === 0) {
-    return <Text>No tasks available to display.</Text>;
+    return ;
   }
 
-  // Count status occurrences
   const statusCount = tasks.reduce((acc, task) => {
     const status = task.properties?.['Status']?.select?.name || 'Unassigned';
-    if (status) {
-      acc[status] = (acc[status] || 0) + 1;
-    } else {
-      console.warn('Task status is null or undefined:', task);
-    }
+    acc[status] = (acc[status] || 0) + 1;
     return acc;
   }, {});
 
-  // Remove 'Unassigned' from the pie chart dataset
   const { Unassigned, ...filteredStatusCount } = statusCount;
 
   if (Object.keys(filteredStatusCount).length === 0) {
-    return <Text>All tasks have an invalid or missing status.</Text>;
+    return <Box p={2}><Text>All tasks have an invalid or missing status.</Text></Box>;
   }
 
   const data = {
@@ -37,15 +30,25 @@ const StatusChart = () => {
     datasets: [
       {
         data: Object.values(filteredStatusCount),
-        backgroundColor: ['#FF6384', '#4BC0C0', '#36A2EB'], // Customize colors as needed
+        backgroundColor: ['#FF6384', '#4BC0C0', '#36A2EB'],
       },
     ],
   };
 
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false, // Prevents distortion
+    plugins: {
+      legend: {
+        position: 'top', // Adjust the legend position if needed
+      }
+    }
+  };
+
   return (
-    <Box p={5} shadow="md" borderWidth="1px">
-      <Text fontSize="xl">Status Chart</Text>
-      <Pie data={data} />
+    <Box p={2}  h="90%" w="100%">
+      <Text fontSize="xl" mb={2}>Status Chart</Text>
+      <Pie data={data} options={options} />
     </Box>
   );
 };
