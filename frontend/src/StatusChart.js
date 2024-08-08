@@ -3,6 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { useTasks } from './TaskContext.js';
 import { Box, Text } from '@chakra-ui/react';
+import { MdPadding } from 'react-icons/md';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
@@ -10,14 +11,16 @@ const StatusChart = () => {
   const { tasks } = useTasks();
 
   if (!tasks || tasks.length === 0) {
-    return ;
+    return null; // Return null instead of empty return
   }
 
-  const statusCount = tasks.reduce((acc, task) => {
-    const status = task.properties?.['Status']?.select?.name || 'Unassigned';
-    acc[status] = (acc[status] || 0) + 1;
-    return acc;
-  }, {});
+  const statusCount = tasks
+    .filter(task => task.properties.Title.title[0]?.plain_text) // Filter tasks that have a valid name
+    .reduce((acc, task) => {
+      const status = task.properties?.['Status']?.select?.name || 'Unassigned';
+      acc[status] = (acc[status] || 0) + 1;
+      return acc;
+    }, {});
 
   const { Unassigned, ...filteredStatusCount } = statusCount;
 
@@ -40,15 +43,17 @@ const StatusChart = () => {
     maintainAspectRatio: false, // Prevents distortion
     plugins: {
       legend: {
-        position: 'top', // Adjust the legend position if needed
+        position: 'top',
+        
+         // Adjust the legend position if needed
       }
     }
   };
 
   return (
-    <Box p={2}  h="90%" w="100%">
-      <Text fontSize="xl" mb={2}>Status Chart</Text>
-      <Pie data={data} options={options} />
+    <Box p={2} h="85%" w="100%">
+      <Text fontSize="2xl" p={2} mb={2} fontWeight="bold">Status Chart</Text>  
+      <Pie  data={data} options={options} />
     </Box>
   );
 };

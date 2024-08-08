@@ -1,38 +1,30 @@
-.App {
-  text-align: center;
+/* Custom scrollbar styles for Webkit browsers */
+::-webkit-scrollbar {
+  width: 6px; /* Thin width for vertical scrollbar */
+  height: 6px; /* Thin height for horizontal scrollbar */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+::-webkit-scrollbar-track {
+  background: transparent; /* Track background (invisible) */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+::-webkit-scrollbar-thumb {
+  background: transparent; /* Thumb color (invisible) */
+  border-radius: 3px; /* Rounded corners for the scrollbar thumb */
+  transition: background 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Thumb color on hover */
 }
 
-.App-link {
-  color: #61dafb;
+/* Custom scrollbar styles for Firefox */
+.scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar width */
+  scrollbar-color: transparent transparent; /* Thumb and track color (invisible) */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.scrollbar:hover {
+  scrollbar-color: #888 transparent; /* Thumb and track color on hover */
 }
+

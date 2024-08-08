@@ -4,9 +4,16 @@ import 'rsuite/dist/rsuite.min.css';
 import {
   Box, useColorModeValue, Text, Button,
   Modal, ModalOverlay, ModalContent, ModalHeader,
-  ModalCloseButton, ModalBody, useDisclosure
+  ModalCloseButton, ModalBody, useDisclosure, Flex
 } from '@chakra-ui/react';
 import { useCalendarInfo } from './CalendarInfoContext';
+
+const categoryColors = {
+  'Work': '#FFD700',  // Yellow
+  'Family': '#800080',  // Purple
+  'Personal': '#FF0000',  // Red
+  'Other': '#E0E0E0'    // Grey
+};
 
 const CustomCalendar = () => {
   const [date, setDate] = useState(new Date());
@@ -36,22 +43,37 @@ const CustomCalendar = () => {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start', // Align items to the top
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: '4px' // Add some padding for spacing
+        padding: '4px'
       }}>
-        
+        {dayEvents.slice(0, 3).map((event, index) => (
+          <Box key={index} style={{
+            marginTop: '2px',
+            width: '10px',
+            height: '10px',
+            borderRadius: '50%',
+            backgroundColor: categoryColors[event.category] || categoryColors['Other']
+          }}/>
+        ))}
+        {dayEvents.length >= 3 && (
+          <Box style={{
+            marginTop: '2px',
+            width: '20px',
+            height: '20px',
+            borderRadius: '50%',
+            backgroundColor: 'red',
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '12px'
+          }}>3+</Box>
+        )}
         {dayEvents.length > 0 && (
-          <>
-            {dayEvents.slice(0, 2).map((event, index) => (
-              <Text key={index} fontSize="xs" style={{ color: 'gray', marginTop: '2px' }}>{event.name}</Text>
-            ))}
-            {dayEvents.length > 2 && (
-              <Button size="xs" onClick={() => openEventModal(date)} style={{ marginTop: '4px' }}>
-                See More
-              </Button>
-            )}
-          </>
+          <Button size="xs" onClick={() => openEventModal(date)} style={{ marginTop: '4px' }}>
+            See More
+          </Button>
         )}
       </div>
     );
@@ -73,7 +95,10 @@ const CustomCalendar = () => {
           <ModalCloseButton />
           <ModalBody>
             {selectedDayEvents.map((event, index) => (
-              <Text key={index} mb={2}>{event.name}</Text>
+              <Flex key={index} align="center" mb={2}>
+                <Box width="12px" height="12px" borderRadius="50%" bg={categoryColors[event.category] || categoryColors['Other']} mr={2} />
+                <Text>{event.name}</Text>
+              </Flex>
             ))}
           </ModalBody>
         </ModalContent>
