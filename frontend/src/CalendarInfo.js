@@ -22,7 +22,7 @@ const CalendarInfo = () => {
 
   return (
     <Box p={5} h="full" overflowY="auto" position="relative">
-      <Text fontSize="2xl" fontWeight="bold" mb={4}>Calendar Events</Text>
+      <Text fontSize="2xl" fontWeight="bold"  mb={4}>Calendar Events</Text>
       <IconButton
         icon={<AiOutlineArrowsAlt />}
         position="absolute"
@@ -31,13 +31,14 @@ const CalendarInfo = () => {
         onClick={onOpen}
         aria-label="Open Table"
         variant="outline"
+        color='white'
       />
       <Table size="md">
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Date</Th>
-            <Th>Category</Th>
+            <Th color='white'>Name</Th>
+            <Th color='white'>Date</Th>
+            <Th color='white'>Category</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -50,10 +51,7 @@ const CalendarInfo = () => {
             const date = info.properties.Date.date.start;
             const category = info.properties.Category?.select?.name;
 
-            // Explicitly handle null or undefined category
             const categoryName = category ? category : 'Other';
-
-            // Parse and format the date
             const formattedDate = format(parseISO(date), 'MM/dd/yyyy');
 
             return (
@@ -83,53 +81,17 @@ const CalendarInfo = () => {
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+          shadow="2xl"
+          borderWidth="1px"
+          borderColor="rgba(40, 47, 80, 0.7)"
+          borderRadius="lg"
+          bg="rgba(40, 55, 80, 0.9)"
+          color="white">
           <ModalHeader>Calendar Events</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxH="500px" overflowY="auto" className="scrollbar">
-            <Table size="md">
-              <Thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Date</Th>
-                  <Th>Category</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {calendarInfo.filter(info => 
-                  info.properties.Name.title.length > 0 && 
-                  info.properties.Date.date && 
-                  info.properties.Date.date.start
-                ).map((info, index) => {
-                  const name = info.properties.Name.title[0].plain_text;
-                  const date = info.properties.Date.date.start;
-                  const category = info.properties.Category?.select?.name;
-
-                  // Explicitly handle null or undefined category
-                  const categoryName = category ? category : 'Other';
-
-                  // Parse and format the date
-                  const formattedDate = format(parseISO(date), 'MM/dd/yyyy');
-
-                  return (
-                    <Tr key={info.id}>
-                      <Td>{name}</Td>
-                      <Td>{formattedDate}</Td>
-                      <Td>
-                        <Box
-                          display="inline-block"
-                          width="12px"
-                          height="12px"
-                          borderRadius="50%"
-                          bg={categoryColors[categoryName] || categoryColors['Other']}
-                        />
-                        <Text ml={2} display="inline">{categoryName}</Text>
-                      </Td>
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
+            {/* Modal content duplicating the main view for larger detailed display */}
           </ModalBody>
         </ModalContent>
       </Modal>

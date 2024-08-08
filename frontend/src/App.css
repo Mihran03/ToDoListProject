@@ -28,3 +28,38 @@
   scrollbar-color: #888 transparent; /* Thumb and track color on hover */
 }
 
+.App {
+  height: 100vh; /* Full height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../public/Animated\ Shape.svg'); /* Update with the correct path */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rs-calendar-header-title {
+  color: white !important;
+  pointer-events: none;
+}
+
+.rs-btn{
+  color: white !important;
+}
+
+
+.rs-btn:hover{
+  color: black !important;
+}
+
+.rs-calendar-btn-today{
+  color: black !important;
+}
+
+.rs-calendar-btn-today:hover{
+  color: white !important;
+}
+
+
+

@@ -17,7 +17,7 @@ const categoryColors = {
 
 const CustomCalendar = () => {
   const [date, setDate] = useState(new Date());
-  const calendarBg = useColorModeValue('white', 'gray.700');
+  const calendarBg = useColorModeValue('rgba(255, 255, 255, 0.0)', 'rgba(23, 25, 35, 0.8)'); // Adjusted for light and dark modes
   const { eventDetails } = useCalendarInfo();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedDayEvents, setSelectedDayEvents] = useState([]);

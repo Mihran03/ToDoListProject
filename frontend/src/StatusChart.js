@@ -3,7 +3,6 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { useTasks } from './TaskContext.js';
 import { Box, Text } from '@chakra-ui/react';
-import { MdPadding } from 'react-icons/md';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
@@ -44,8 +43,9 @@ const StatusChart = () => {
     plugins: {
       legend: {
         position: 'top',
-        
-         // Adjust the legend position if needed
+        labels: {
+          color: 'white' // Set legend text color to white
+        }
       }
     }
   };

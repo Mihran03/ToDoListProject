@@ -35,12 +35,13 @@ const TodoList = () => {
         onClick={onOpen}
         aria-label="Open Table"
         variant="outline"
+        color='white'
       />
       <Table size="md">
         <Thead>
           <Tr>
-            <Th>Title</Th>
-            <Th>Status</Th>
+            <Th color='white'> Title</Th>
+            <Th color='white'>Status</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -73,37 +74,44 @@ const TodoList = () => {
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>To-Do List Details</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody maxH="500px" overflowY="auto" className="scrollbar">
-            <Table size="md">
-              <Thead>
-                <Tr>
-                  <Th>Title</Th>
-                  <Th>Status</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {tasks.filter(task => task.properties.Title.title[0]?.plain_text).map(task => (
-                  <Tr key={task.id}>
-                    <Td>{task.properties.Title.title[0]?.plain_text}</Td>
-                    <Td>
-                      <Box
-                        display="inline-block"
-                        width="12px"
-                        height="12px"
-                        borderRadius="50%"
-                        bg={statusColors[task.properties['Status']?.select?.name || 'Unassigned']}
-                      />
-                      <Text ml={2} display="inline">{task.properties['Status']?.select?.name || 'Unassigned'}</Text>
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </ModalBody>
-        </ModalContent>
+        <ModalContent
+  shadow="2xl"
+  borderWidth="1px"
+  borderColor="rgba(40, 47, 80, 0.7)"
+  borderRadius="lg"
+  bg="rgba(40, 55, 80, 0.9)"
+  color="white"
+>
+  <ModalHeader>To-Do List Details</ModalHeader>
+  <ModalCloseButton />
+  <ModalBody maxH="500px" overflowY="auto" className="scrollbar">
+    <Table size="md">
+      <Thead>
+        <Tr>
+          <Th color='white'>Title</Th>
+          <Th color='white'>Status</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {tasks.filter(task => task.properties.Title.title[0]?.plain_text).map(task => (
+          <Tr key={task.id}>
+            <Td>{task.properties.Title.title[0]?.plain_text}</Td>
+            <Td>
+              <Box
+                display="inline-block"
+                width="12px"
+                height="12px"
+                borderRadius="50%"
+                bg={statusColors[task.properties['Status']?.select?.name || 'Unassigned']}
+              />
+              <Text ml={2} display="inline">{task.properties['Status']?.select?.name || 'Unassigned'}</Text>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
+  </ModalBody>
+</ModalContent>
       </Modal>
     </Box>
   );

@@ -63,8 +63,8 @@ const Weather = () => {
     <Box p={4} height="100%" display="flex" flexDirection="column" justifyContent="space-between">
       <Flex justifyContent="space-between">
         <Flex direction="column" textAlign="left">
-          <Text fontSize="xl" fontWeight="bold">{forecastData.location.name}</Text>
-          <Text fontSize="lg">{new Date(today.date).toLocaleDateString()}</Text>
+          <Text marginTop={5} fontSize="3xl" fontWeight="bold">{forecastData.location.name}</Text>
+          
         </Flex>
         <Flex direction="column" align="center">
           {weatherIcon(today.day.condition.text.toLowerCase())}
