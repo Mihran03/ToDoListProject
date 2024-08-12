@@ -25,13 +25,13 @@ const TodoList = () => {
   }, [setTasks]);
 
   return (
-    <Box p={5} h="full" overflowY="auto" position="relative">
-      <Text fontSize="2xl" fontWeight="bold" mb={4}>To-Do List</Text>
+    <Box p="1.25rem" h="full" overflowY="auto" position="relative">
+      <Text fontSize="1.25rem" fontWeight="bold" mb="1rem">To-Do List</Text>
       <IconButton
         icon={<AiOutlineArrowsAlt />}
         position="absolute"
-        top={4}
-        right={4}
+        top="1rem"
+        right="1rem"
         onClick={onOpen}
         aria-label="Open Table"
         variant="outline"
@@ -40,8 +40,8 @@ const TodoList = () => {
       <Table size="md">
         <Thead>
           <Tr>
-            <Th color='white'> Title</Th>
-            <Th color='white'>Status</Th>
+            <Th color='white' fontSize="1rem">Title</Th>
+            <Th color='white' fontSize="1rem">Status</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -51,20 +51,20 @@ const TodoList = () => {
             return (
               <MotionTr
                 key={task.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: '1.25rem' }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Td>{name}</Td>
-                <Td>
+                <Td fontSize="1rem">{name}</Td>
+                <Td fontSize="1rem">
                   <Box
                     display="inline-block"
-                    width="12px"
-                    height="12px"
+                    width="0.75rem"
+                    height="0.75rem"
                     borderRadius="50%"
                     bg={statusColors[status]}
                   />
-                  <Text ml={2} display="inline">{status}</Text>
+                  <Text ml="0.5rem" display="inline">{status}</Text>
                 </Td>
               </MotionTr>
             );
@@ -75,43 +75,43 @@ const TodoList = () => {
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent
-  shadow="2xl"
-  borderWidth="1px"
-  borderColor="rgba(40, 47, 80, 0.7)"
-  borderRadius="lg"
-  bg="rgba(40, 55, 80, 0.9)"
-  color="white"
->
-  <ModalHeader>To-Do List Details</ModalHeader>
-  <ModalCloseButton />
-  <ModalBody maxH="500px" overflowY="auto" className="scrollbar">
-    <Table size="md">
-      <Thead>
-        <Tr>
-          <Th color='white'>Title</Th>
-          <Th color='white'>Status</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {tasks.filter(task => task.properties.Title.title[0]?.plain_text).map(task => (
-          <Tr key={task.id}>
-            <Td>{task.properties.Title.title[0]?.plain_text}</Td>
-            <Td>
-              <Box
-                display="inline-block"
-                width="12px"
-                height="12px"
-                borderRadius="50%"
-                bg={statusColors[task.properties['Status']?.select?.name || 'Unassigned']}
-              />
-              <Text ml={2} display="inline">{task.properties['Status']?.select?.name || 'Unassigned'}</Text>
-            </Td>
-          </Tr>
-        ))}
-      </Tbody>
-    </Table>
-  </ModalBody>
-</ModalContent>
+          shadow="2xl"
+          borderWidth="0.0625rem"
+          borderColor="rgba(40, 47, 80, 0.7)"
+          borderRadius="0.5rem"
+          bg="rgba(40, 55, 80, 0.9)"
+          color="white"
+        >
+          <ModalHeader fontSize="1.125rem">To-Do List Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody maxH="31.25rem" overflowY="auto" className="scrollbar">
+            <Table size="md">
+              <Thead>
+                <Tr>
+                  <Th color='white' fontSize="1rem">Title</Th>
+                  <Th color='white' fontSize="1rem">Status</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {tasks.filter(task => task.properties.Title.title[0]?.plain_text).map(task => (
+                  <Tr key={task.id}>
+                    <Td fontSize="1rem">{task.properties.Title.title[0]?.plain_text}</Td>
+                    <Td fontSize="1rem">
+                      <Box
+                        display="inline-block"
+                        width="0.75rem"
+                        height="0.75rem"
+                        borderRadius="50%"
+                        bg={statusColors[task.properties['Status']?.select?.name || 'Unassigned']}
+                      />
+                      <Text ml="0.5rem" display="inline">{task.properties['Status']?.select?.name || 'Unassigned'}</Text>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </Box>
   );

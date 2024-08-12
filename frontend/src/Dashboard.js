@@ -37,7 +37,7 @@ const Dashboard = () => {
       templateRows='repeat(4, 1fr)'
       templateColumns='repeat(4, 1fr)'
       gap={4}
-      padding={10}
+      padding={7}
       variants={{
         visible: { transition: { staggerChildren: 0.2 } }
       }}

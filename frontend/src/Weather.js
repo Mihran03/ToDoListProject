@@ -37,39 +37,39 @@ const Weather = () => {
   }, []);
 
   const weatherIcon = (weather) => {
-    if (weather.includes('cloud')) return <Icon as={MdCloud} boxSize={16} color="gray.500" />;
-    if (weather.includes('snow')) return <Icon as={MdSnowing} boxSize={16} color="blue.500" />;
-    if (weather.includes('rain') || weather.includes('drizzle')) return <Icon as={MdCloudySnowing} boxSize={16} color="blue.600" />;
-    return <Icon as={MdWbSunny} boxSize={16} color="yellow.500" />;
+    if (weather.includes('cloud')) return <Icon as={MdCloud} boxSize="4rem" color="gray.500" />;
+    if (weather.includes('snow')) return <Icon as={MdSnowing} boxSize="4rem" color="blue.500" />;
+    if (weather.includes('rain') || weather.includes('drizzle')) return <Icon as={MdCloudySnowing} boxSize="4rem" color="blue.600" />;
+    return <Icon as={MdWbSunny} boxSize="4rem" color="yellow.500" />;
   };
 
   if (locationError) return (
-    <Box p={4} width="100%" height="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <Text fontSize="lg" color="red.500" textAlign="center">{locationError}</Text>
-      <Button colorScheme="blue" mt={2} onClick={() => window.location.reload()}>Retry</Button>
+    <Box p="1rem" width="100%" height="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+      <Text fontSize="1rem" color="red.500" textAlign="center">{locationError}</Text>
+      <Button colorScheme="blue" mt="0.5rem" onClick={() => window.location.reload()}>Retry</Button>
     </Box>
   );
 
   if (!forecastData) return (
-    <Box p={4} width="100%" height="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+    <Box p="1rem" width="100%" height="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Spinner size="xl" />
-      <Text mt={4}>Loading weather data...</Text>
+      <Text mt="1rem" fontSize="1rem">Loading weather data...</Text>
     </Box>
   );
 
   const today = forecastData.forecast.forecastday[0];
   const otherDays = forecastData.forecast.forecastday.slice(1);
+
   return (
-    <Box p={4} height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+    <Box p="1rem" height="100%" display="flex" flexDirection="column" justifyContent="space-between">
       <Flex justifyContent="space-between">
         <Flex direction="column" textAlign="left">
-          <Text marginTop={5} fontSize="3xl" fontWeight="bold">{forecastData.location.name}</Text>
-          
+          <Text marginTop="1.25rem" fontSize="2xl" fontWeight="bold">{forecastData.location.name}</Text>
         </Flex>
         <Flex direction="column" align="center">
           {weatherIcon(today.day.condition.text.toLowerCase())}
-          <Text fontSize="lg" mt={1}>{today.day.condition.text}</Text>
-          <Text fontSize="lg">{Math.round(today.day.avgtemp_c)}°C</Text>
+          <Text fontSize="1rem" mt="0.25rem">{today.day.condition.text}</Text>
+          <Text fontSize="1rem">{Math.round(today.day.avgtemp_c)}°C</Text>
         </Flex>
       </Flex>
       <Flex justifyContent="center" mt="auto">
@@ -78,29 +78,36 @@ const Weather = () => {
         </Button>
 
         <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Weather Forecast</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex direction="row" wrap="wrap" justify="center">
-              {otherDays.map((day, index) => (
-                <Box key={index} p={2} textAlign="center">
-                  {weatherIcon(day.day.condition.text.toLowerCase())}
-                  <Text fontSize="sm" mt={1}>{new Date(day.date).toLocaleDateString()}</Text>
-                  <Text fontSize="sm">{day.day.condition.text}</Text>
-                  <Text fontSize="sm">{Math.round(day.day.avgtemp_c)}°C</Text>
-                </Box>
-              ))}
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+          <ModalOverlay />
+          <ModalContent
+            shadow="2xl"
+            borderWidth="0.0625rem"
+            borderColor="rgba(40, 47, 80, 0.7)"
+            borderRadius="0.5rem"
+            bg="rgba(40, 55, 80, 0.9)"
+            color="white"
+          >
+            <ModalHeader fontSize="1.25rem">Weather Forecast</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody maxH="31.25rem" overflowY="auto" className="scrollbar">
+              <Flex direction="row" wrap="wrap" justify="center">
+                {otherDays.map((day, index) => (
+                  <Box key={index} p="0.5rem" textAlign="center">
+                    {weatherIcon(day.day.condition.text.toLowerCase())}
+                    <Text fontSize="0.75rem" mt="0.25rem">{new Date(day.date).toLocaleDateString()}</Text>
+                    <Text fontSize="0.75rem">{day.day.condition.text}</Text>
+                    <Text fontSize="0.75rem">{Math.round(day.day.avgtemp_c)}°C</Text>
+                  </Box>
+                ))}
+              </Flex>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr="0.75rem" onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Flex>
     </Box>
   );

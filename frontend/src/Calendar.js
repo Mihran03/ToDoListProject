@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Calendar as RSuiteCalendar } from 'rsuite';
-import 'rsuite/dist/rsuite.min.css';
+import Calendar from 'react-calendar';
 import {
   Box, useColorModeValue, Text, Button,
   Modal, ModalOverlay, ModalContent, ModalHeader,
-  ModalCloseButton, ModalBody, useDisclosure, Flex
+  ModalCloseButton, ModalBody, useDisclosure, Flex, Grid
 } from '@chakra-ui/react';
+import 'react-calendar/dist/Calendar.css';
 import { useCalendarInfo } from './CalendarInfoContext';
 
 const categoryColors = {
@@ -17,7 +17,6 @@ const categoryColors = {
 
 const CustomCalendar = () => {
   const [date, setDate] = useState(new Date());
-  const calendarBg = useColorModeValue('rgba(255, 255, 255, 0.0)', 'rgba(23, 25, 35, 0.8)'); // Adjusted for light and dark modes
   const { eventDetails } = useCalendarInfo();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedDayEvents, setSelectedDayEvents] = useState([]);
@@ -33,60 +32,61 @@ const CustomCalendar = () => {
     onOpen();
   };
 
-  const renderCell = (date) => {
-    const currentDate = date.toISOString().split('T')[0];
-    const dayEvents = eventDetails.filter(event => event.date === currentDate);
+  const tileContent = ({ date, view }) => {
+    if (view === 'month') {
+      const currentDate = date.toISOString().split('T')[0];
+      const dayEvents = eventDetails.filter(event => event.date === currentDate);
 
-    return (
-      <div style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        padding: '4px'
-      }}>
-        {dayEvents.slice(0, 3).map((event, index) => (
-          <Box key={index} style={{
-            marginTop: '2px',
-            width: '10px',
-            height: '10px',
-            borderRadius: '50%',
-            backgroundColor: categoryColors[event.category] || categoryColors['Other']
-          }}/>
-        ))}
-        {dayEvents.length >= 3 && (
-          <Box style={{
-            marginTop: '2px',
-            width: '20px',
-            height: '20px',
-            borderRadius: '50%',
-            backgroundColor: 'red',
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '12px'
-          }}>3+</Box>
-        )}
-        {dayEvents.length > 0 && (
-          <Button size="xs" onClick={() => openEventModal(date)} style={{ marginTop: '4px' }}>
-            See More
-          </Button>
-        )}
-      </div>
-    );
+      return (
+        <Box position="relative" width="100%" height="100%" >
+          <Grid templateColumns="repeat(2, 1fr)" gap="0.2rem">
+            {dayEvents.slice(0, 2).map((event, index) => (
+              <Box key={index}
+                width="0.7rem"  // Fixed sizing using rem
+                height="0.7rem" // Fixed sizing using rem
+                borderRadius="50%"
+                bg={categoryColors[event.category] || categoryColors['Other']}
+                margin="auto"
+              />
+            ))}
+          </Grid>
+          {dayEvents.length > 2 && (
+            <Text
+              position="center"
+              bottom="0.2rem"
+              right="0.2rem"
+              fontSize="0.6rem"
+              color="red.500"
+            >
+              2+
+            </Text>
+          )}
+        </Box>
+      );
+    }
+  };
+
+  const onClickDay = (value) => {
+    openEventModal(value);
   };
 
   return (
-    <Box p={4} bg={calendarBg} h="full" w="full">
-      <RSuiteCalendar
-        value={date}
+    <Box 
+      flex="1"
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      
+      
+    >
+      <Calendar
         onChange={handleDateChange}
-        format="YYYY-MM-DD"
-        style={{ height: '100%', width: '100%', backgroundColor: calendarBg, border: 'none' }}
-        renderCell={renderCell}
+        value={date}
+        tileContent={tileContent}
+        onClickDay={onClickDay}
+        className="chakra-calendar" // Add custom className for styling
+        tileClassName="custom-tile" // Add custom className for tile styling
       />
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
@@ -95,14 +95,21 @@ const CustomCalendar = () => {
           <ModalCloseButton />
           <ModalBody>
             {selectedDayEvents.map((event, index) => (
-              <Flex key={index} align="center" mb={2}>
-                <Box width="12px" height="12px" borderRadius="50%" bg={categoryColors[event.category] || categoryColors['Other']} mr={2} />
-                <Text>{event.name}</Text>
+              <Flex key={index} align="center" mb="0.5rem">
+                <Box
+                  width="1rem" // Fixed sizing using rem
+                  height="1rem" // Fixed sizing using rem
+                  borderRadius="50%"
+                  bg={categoryColors[event.category] || categoryColors['Other']}
+                  mr="0.5rem"
+                />
+                <Text fontSize="0.875rem">{event.name}</Text>  {/* Use rem for font size */}
               </Flex>
             ))}
           </ModalBody>
         </ModalContent>
       </Modal>
+      
     </Box>
   );
 };

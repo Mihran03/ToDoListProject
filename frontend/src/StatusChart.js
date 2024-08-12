@@ -24,7 +24,7 @@ const StatusChart = () => {
   const { Unassigned, ...filteredStatusCount } = statusCount;
 
   if (Object.keys(filteredStatusCount).length === 0) {
-    return <Box p={2}><Text>All tasks have an invalid or missing status.</Text></Box>;
+    return <Box p="0.5rem"><Text fontSize="0.875rem">All tasks have an invalid or missing status.</Text></Box>;
   }
 
   const data = {
@@ -44,16 +44,19 @@ const StatusChart = () => {
       legend: {
         position: 'top',
         labels: {
-          color: 'white' // Set legend text color to white
+          color: 'white', // Set legend text color to white
+          font: {
+            size: 12 // Make legend text smaller
+          }
         }
       }
     }
   };
 
   return (
-    <Box p={2} h="85%" w="100%">
-      <Text fontSize="2xl" p={2} mb={2} fontWeight="bold">Status Chart</Text>  
-      <Pie  data={data} options={options} />
+    <Box p="0.5rem" h="80%" w="100%">
+      <Text fontSize="1.5rem" p="0.5rem" mb="0.5rem" fontWeight="bold">Status Chart</Text>  
+      <Pie data={data} options={options} height={200} width={200} />
     </Box>
   );
 };
