@@ -24,7 +24,7 @@ const Dashboard = () => {
   const boxStyle = {
     shadow: '2xl', // Enhanced shadow effect
     borderWidth: '1px',
-    borderColor: 'rgba(40, 47, 80, 0.7)', // Adjust the border color to match the theme
+    borderColor: 'rgba(40, 47, 80, 0.0)', // Adjust the border color to match the theme
     borderRadius: 'lg', // Rounded corners
     bg: 'rgba(0, 0, 0, 0.3)', // Using RGBA for translucency, adjust the color as needed
     color: 'white', // Text color for better visibility on dark background
