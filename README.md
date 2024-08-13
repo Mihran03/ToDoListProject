@@ -11,7 +11,7 @@ Welcome to the ToDoList-Dashboard repository! This project is a comprehensive da
 - **Calendar Events**: Display upcoming events with category color coding.
 
 - **Weather**: Get real-time weather updates.
-  ![Weather](path/to/weather-screenshot.png)
+
 - **Time**: View the current date and time.
 
 - **Statistics**: Visualize various statistics with interactive charts.
