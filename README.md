@@ -17,7 +17,7 @@ Welcome to the ToDoList-Dashboard repository! This project is a comprehensive da
 - **Statistics**: Visualize various statistics with interactive charts.
 
 ## App Visuals
-  ![Visuals](path/to/statistics-screenshot.png)
+  ![Visuals](frontend/public/image.png)
 
 ## Technologies Used
 
