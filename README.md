@@ -20,8 +20,8 @@ Welcome to the ToDoList-Dashboard repository! This project is a comprehensive da
   ![Visuals](frontend/public/image.png)
 
 ## Technologies Used
-
 - **React**: For building the user interface.
+- **Django REST Framework**: For the backend interface
 - **Chakra UI**: For styling and theming.
 - **Framer Motion**: For animations and transitions.
 - **Notion API**: For integration with Notion services.
