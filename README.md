@@ -2,6 +2,9 @@
 
 Welcome to the ToDoList-Dashboard repository! This project is a comprehensive dashboard that integrates with Notion, providing a unified view of your calendar, to-do list, calendar events, weather, time, and statistics. The dashboard is built with React, utilizing Chakra UI for styling and Framer Motion for animations.
 
+## App Visuals
+  ![Visuals](frontend/public/image.png)
+
 ## Features
 
 - **Calendar**: View and manage your events with a user-friendly interface.
@@ -16,8 +19,7 @@ Welcome to the ToDoList-Dashboard repository! This project is a comprehensive da
 
 - **Statistics**: Visualize various statistics with interactive charts.
 
-## App Visuals
-  ![Visuals](frontend/public/image.png)
+
 
 ## Technologies Used
 - **React**: For building the user interface.
