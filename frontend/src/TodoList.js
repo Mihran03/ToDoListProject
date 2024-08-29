@@ -1,51 +1,53 @@
-import React, { useEffect } from 'react';
-import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure } from '@chakra-ui/react';
-import { AiOutlineArrowsAlt } from 'react-icons/ai';
+import React, { useState, useEffect } from 'react';
+import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Spinner } from '@chakra-ui/react';
+import { FiExternalLink } from 'react-icons/fi';
 import { useTasks } from './TaskContext';
 import { motion } from 'framer-motion';
-
-const statusColors = {
-  'Not Started': '#FF6384',
-  'In Progress': '#36A2EB',
-  'Completed': '#4BC0C0',
-  'Unassigned': '#E0E0E0'
-};
-
-const MotionTr = motion.tr;
 
 const TodoList = () => {
   const { tasks, setTasks } = useTasks();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const MotionTr = motion.tr;
 
   useEffect(() => {
     fetch('http://localhost:8000/api/todo/')
       .then(response => response.json())
-      .then(data => setTasks(data.tasks))
-      .catch(error => console.error('Error fetching tasks:', error));
+      .then(data => {
+        setTasks(data.tasks);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching tasks:', error);
+        setLoading(false);
+      });
   }, [setTasks]);
+
+  const handleExpandClick = (task) => {
+    setSelectedTask(task);
+    onOpen();
+  };
+
+  if (loading) return (
+    <Box display="flex" alignItems="center" justifyContent="center" height="full">
+      <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+    </Box>
+  );
 
   return (
     <Box p="1.25rem" h="full" overflowY="auto" position="relative">
       <Text fontSize="1.25rem" fontWeight="bold" mb="1rem">To-Do List</Text>
-      <IconButton
-        icon={<AiOutlineArrowsAlt />}
-        position="absolute"
-        top="1rem"
-        right="1rem"
-        onClick={onOpen}
-        aria-label="Open Table"
-        variant="outline"
-        color='white'
-      />
       <Table size="md">
         <Thead>
           <Tr>
             <Th color='white' fontSize="1rem">Title</Th>
             <Th color='white' fontSize="1rem">Status</Th>
+            <Th color='white' fontSize="1rem">Expand</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {tasks.filter(task => task.properties.Title.title[0]?.plain_text).map((task, index) => {
+          {tasks.map((task, index) => {
             const status = task.properties['Status']?.select?.name || 'Unassigned';
             const name = task.properties.Title.title[0]?.plain_text;
             return (
@@ -62,9 +64,18 @@ const TodoList = () => {
                     width="0.75rem"
                     height="0.75rem"
                     borderRadius="50%"
-                    bg={statusColors[status]}
+                    bg={['#FF6384', '#36A2EB', '#4BC0C0', '#E0E0E0'][Math.floor(Math.random() * 4)]}
                   />
                   <Text ml="0.5rem" display="inline">{status}</Text>
+                </Td>
+                <Td>
+                  <IconButton
+                    icon={<FiExternalLink />}
+                    onClick={() => handleExpandClick(task)}
+                    aria-label="Expand Task"
+                    variant="outline"
+                    color="white"
+                  />
                 </Td>
               </MotionTr>
             );
@@ -82,34 +93,15 @@ const TodoList = () => {
           bg="rgba(40, 55, 80, 0.9)"
           color="white"
         >
-          <ModalHeader fontSize="1.125rem">To-Do List Details</ModalHeader>
+          <ModalHeader fontSize="1.125rem">Task Details</ModalHeader>
           <ModalCloseButton />
-          <ModalBody maxH="31.25rem" overflowY="auto" className="scrollbar">
-            <Table size="md">
-              <Thead>
-                <Tr>
-                  <Th color='white' fontSize="1rem">Title</Th>
-                  <Th color='white' fontSize="1rem">Status</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {tasks.filter(task => task.properties.Title.title[0]?.plain_text).map(task => (
-                  <Tr key={task.id}>
-                    <Td fontSize="1rem">{task.properties.Title.title[0]?.plain_text}</Td>
-                    <Td fontSize="1rem">
-                      <Box
-                        display="inline-block"
-                        width="0.75rem"
-                        height="0.75rem"
-                        borderRadius="50%"
-                        bg={statusColors[task.properties['Status']?.select?.name || 'Unassigned']}
-                      />
-                      <Text ml="0.5rem" display="inline">{task.properties['Status']?.select?.name || 'Unassigned'}</Text>
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
+          <ModalBody maxH="31.25rem" overflowY="auto">
+            {selectedTask && (
+              <>
+                <Text fontSize="1.25rem" fontWeight="bold">{selectedTask.properties.Title.title[0]?.plain_text}</Text>
+                <Text mt="1rem">{selectedTask.properties['Notes']?.rich_text[0]?.plain_text || "No notes available."}</Text>
+              </>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

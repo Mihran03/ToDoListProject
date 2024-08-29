@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\mihra\Desktop\Dasboard\ToDoListProject\backend\venv"
+VIRTUAL_ENV="C:\Users\mihran.admin\Desktop\Dashboard-Copy\backend\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
